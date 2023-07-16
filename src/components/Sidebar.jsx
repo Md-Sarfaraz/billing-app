@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import './sidebar.css'
 import { Link } from 'react-router-dom'
-import { FaBars } from 'react-icons/fa'
-import { BiSolidDashboard } from 'react-icons/bi'
+import { BiSolidDashboard, BiUser } from 'react-icons/bi'
 import { FaFileInvoice } from 'react-icons/fa'
 import { BsFillBoxFill } from 'react-icons/bs'
 import { IoIosPeople } from 'react-icons/io'
@@ -13,54 +12,28 @@ const Sidebar = () => {
     const [IsOpen, setIsOpen] = useState(true)
     const toggle = () => { setIsOpen(!IsOpen); console.log("Clock") }
 
-    const menuItem = [
-        {
-            path: '/',
-            name: "Dasboard",
-            icon: <BiSolidDashboard />
-        },
-        {
-            path: '/invoices',
-            name: "Invoices",
-            icon: <FaFileInvoice />
-        }, {
-            path: '/product',
-            name: "Products",
-            icon: <BsFillBoxFill />
-        }, {
-            path: '/profile',
-            name: "Customers",
-            icon: <IoIosPeople />
-        }, {
-            path: '/sysuser',
-            name: "System User",
-            icon: <RiAdminFill />
-        },
 
-    ]
 
 
     return (<nav id="sidebar" className="sidebar">
-        <div className="simplebar-content-wrapper"
-            tabindex="0" role="region" aria-label="scrollable content"
-            style={{ height: "100%", overflow: "hidden scroll" }}>
-            <a className="sidebar-brand" href="index.html">
+        <div className="d-flex flex-column"          
+            style={{ height: "100%", overflow: "hidden" }}>
+            <a className="sidebar-brand fs-4 text-white p-3 fw-semibold" href="index.html">
                 <span className="align-middle">AdminKit</span>
             </a>
-            <div className="simplebar-content d-flex" style={{ padding: 0 }}>
-
+            <div className="d-flex flex-column overflow-auto" style={{ padding: 0 }}>
                 <ul className="sidebar-nav">
                     <li className="sidebar-header">
                         MAIN
                     </li>
                     <li className="sidebar-item active">
                         <a className="sidebar-link" href="index.html">
-                            <span className="align-middle">Dashboard</span>
+                        <BiSolidDashboard />      <span className="align-middle">Dashboard</span>
                         </a>
                     </li>
                     <li className="sidebar-item">
                         <a className="sidebar-link" href="pages-profile.html">
-                            <span className="align-middle">Profile</span>
+                          <BiUser/>  <span className="align-middle">Profile</span>
                         </a>
                     </li>
                     <li className="sidebar-header">
@@ -69,7 +42,7 @@ const Sidebar = () => {
 
                     <li className="sidebar-item">
                         <a className="sidebar-link" href="ui-buttons.html">
-                            <span className="align-middle">Create New Invoice</span>
+                        <FaFileInvoice /> <span className="align-middle">Create New Invoice</span>
                         </a>
                     </li>
 
@@ -90,7 +63,7 @@ const Sidebar = () => {
 
                     <li className="sidebar-item">
                         <a className="sidebar-link" href="maps-google.html">
-                            <span className="align-middle">Product List</span>
+                        <BsFillBoxFill />  <span className="align-middle">Product List</span>
                         </a>
                     </li>
                     <li className="sidebar-header">
@@ -105,7 +78,7 @@ const Sidebar = () => {
 
                     <li className="sidebar-item">
                         <a className="sidebar-link" href="maps-google.html">
-                            <span className="align-middle">Manage Customers</span>
+                        <IoIosPeople />    <span className="align-middle">Manage Customers</span>
                         </a>
                     </li>
                     <li className="sidebar-header">
@@ -120,7 +93,7 @@ const Sidebar = () => {
 
                     <li className="sidebar-item">
                         <a className="sidebar-link" href="maps-google.html">
-                            <span className="align-middle">Manage Users</span>
+                        <RiAdminFill />  <span className="align-middle">Manage Users</span>
                         </a>
                     </li>
                 </ul>

@@ -9,18 +9,21 @@ import Customers from './customers/Customers';
 import Navbar from './components/Navbar';
 
 function App() {
-  return (
-    <div className="App">
-      <Sidebar/>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/customers" element={<Customers />} />
-        </Routes>
+  return (<div className="App justify-content-between">
+    <Sidebar />
+    <div className='main'>
 
-      {/* <Navbar /> */}
+      <Navbar />
+
+
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/customers" element={<Customers />} />
+      </Routes>
+
     </div>
-  );
+  </div>);
 }
 
 export default App;
