@@ -9,7 +9,7 @@ import { IoIosPeople } from 'react-icons/io'
 import { RiAdminFill } from 'react-icons/ri'
 
 
-const Sidebar = ({ children }) => {
+const Sidebar = () => {
     const [IsOpen, setIsOpen] = useState(true)
     const toggle = () => { setIsOpen(!IsOpen); console.log("Clock") }
 
@@ -40,34 +40,111 @@ const Sidebar = ({ children }) => {
     ]
 
 
-    return (
-        <div className="d-flex">
-            <div className="bg-dark vh-100" style={{ width: IsOpen ? "300px" : "50px" }}>
-                <div className="d-flex align-items-center px-3 py-4">
-                    <h1 className={(IsOpen ? "" : "") + "fs-3 fw-bold "}>Invoice System</h1>
-                    <div className="d-flex fs-3 ms-3 ">
-                        <FaBars onClick={toggle} className='' />
+    return (<nav id="sidebar" className="sidebar">
+        <div className="simplebar-content-wrapper"
+            tabindex="0" role="region" aria-label="scrollable content"
+            style={{ height: "100%", overflow: "hidden scroll" }}>
+            <a className="sidebar-brand" href="index.html">
+                <span className="align-middle">AdminKit</span>
+            </a>
+            <div className="simplebar-content d-flex" style={{ padding: 0 }}>
+
+                <ul className="sidebar-nav">
+                    <li className="sidebar-header">
+                        MAIN
+                    </li>
+                    <li className="sidebar-item active">
+                        <a className="sidebar-link" href="index.html">
+                            <span className="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="pages-profile.html">
+                            <span className="align-middle">Profile</span>
+                        </a>
+                    </li>
+                    <li className="sidebar-header">
+                        INVOICE
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="ui-buttons.html">
+                            <span className="align-middle">Create New Invoice</span>
+                        </a>
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="ui-forms.html">
+                            <span className="align-middle">Invoice List</span>
+                        </a>
+                    </li>
+                    <li className="sidebar-header">
+                        PRODUCT
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="charts-chartjs.html">
+                            <span className="align-middle">Add Product</span>
+                        </a>
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="maps-google.html">
+                            <span className="align-middle">Product List</span>
+                        </a>
+                    </li>
+                    <li className="sidebar-header">
+                        CUSTOMER
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="charts-chartjs.html">
+                            <span className="align-middle">Add New Customer</span>
+                        </a>
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="maps-google.html">
+                            <span className="align-middle">Manage Customers</span>
+                        </a>
+                    </li>
+                    <li className="sidebar-header">
+                        SYSTEM MANAGEMENT
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="charts-chartjs.html">
+                            <span className="align-middle">Add User</span>
+                        </a>
+                    </li>
+
+                    <li className="sidebar-item">
+                        <a className="sidebar-link" href="maps-google.html">
+                            <span className="align-middle">Manage Users</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div className="sidebar-bottom">
+                    <div className="sidebar-bottom-content">
+
                     </div>
                 </div>
-                {
-                    // d-flex text-decoration-none px-3 py-2 gap-3
-                    menuItem.map((item, index) => {
-                        return (<div className='sidebar-item px-3 px-1' key={index}>
-                            <Link to={item.path} className='d-flex fs-6 text-decoration-none px-3 py-2 gap-3 '                            >
-                                <div className="icon">{item.icon}</div>
-                                <div className="link-text">{item.name}</div>
-
-                            </Link>
-                        </div>)
-                    })
-                }
 
             </div>
-
-            <main className="p-1">
-                {children}
-            </main>
+            {/* Scroll */}
+            {/* <div class="simplebar-track simplebar-horizontal" style={{visibility: "hidden"}}>
+                <div class="simplebar-scrollbar" style={{width: 0, display: "none"}}>
+                </div>
+            </div>
+            <div class="simplebar-track simplebar-vertical" style={{visibility: "visible"}}>
+                <div class="simplebar-scrollbar" style={{height: "408px", transform: "translate3d(0px, 0px, 0px)", display: "block"}}>
+                </div>
+            </div> */}
+            {/* Scroll */}
         </div>
+
+    </nav>
     )
 }
 

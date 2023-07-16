@@ -11,14 +11,14 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Sidebar>
+      <Sidebar/>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/customers" element={<Customers />} />
         </Routes>
-      </Sidebar>
+
+      {/* <Navbar /> */}
     </div>
   );
 }
