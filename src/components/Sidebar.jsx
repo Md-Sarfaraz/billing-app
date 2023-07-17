@@ -18,7 +18,7 @@ const Sidebar = () => {
     return (<nav id="sidebar" className="sidebar">
         <div className="d-flex flex-column"          
             style={{ height: "100%", overflow: "hidden" }}>
-            <a className="sidebar-brand fs-4 text-white p-3 fw-semibold" href="index.html">
+            <a className="sidebar-brand fs-4 text-white px-3 py-2 fw-semibold" href="index.html">
                 <span className="align-middle">AdminKit</span>
             </a>
             <div className="d-flex flex-column overflow-auto" style={{ padding: 0 }}>
