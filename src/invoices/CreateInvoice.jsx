@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { SlCalender } from 'react-icons/sl'
-import Form from 'react-bootstrap/Form'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import CustomerDetails from './Customer-details';
 
 
 const CreateInvoice = () => {
@@ -50,6 +49,10 @@ const CreateInvoice = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="">
+        <CustomerDetails />
       </div>
     </div>
   )
