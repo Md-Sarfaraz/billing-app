@@ -1,15 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomerDetails from './Customer-details';
+import OrderDetailes from './OrderDetailes';
 
 
 const CreateInvoice = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [ItemList, setItemList] = useState({
+    date: "",
+    items: [{
+      id: Math.random(), item: "", quantity: "",
+      price: "", discount: "", subtotal: ""
+    }]
+  })
+
+  useEffect(() => {
+    console.log("invoice :: ", typeof ItemList)
+
+    // console.log("invoice :: ", [...ItemList])
+  }, [])
+
+
+  const addItem = () => {
+
+  }
+  const deleteItem = () => {
+
+  }
+
 
   return (
-    <div className='p-5'>
-      <h1 className='h3 mb-3'>Create New Invoice</h1>
+    <div className='p-4'>
+      <h1 className='h3 mb-3 text-secondary'>Create New Invoice</h1>
       <div className="d-flex justify-content-end w-100">
         <div className="d-flex flex-column">
           <div className="d-flex gap-3 pb-3 justify-content-end">
@@ -53,6 +76,7 @@ const CreateInvoice = () => {
 
       <div className="">
         <CustomerDetails />
+        <OrderDetailes add={addItem} delete={deleteItem} itemList={ItemList} />
       </div>
     </div>
   )

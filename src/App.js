@@ -16,7 +16,7 @@ import Navbar from './components/Navbar';
 
 function App() {
   const [IsOpen, setIsOpen] = useState(true)
-  const toggle = () => { setIsOpen(!IsOpen); console.log("Clock") }
+  // const toggle = () => { setIsOpen(!IsOpen); console.log("Clock") }
 
 
   return (<div className="App justify-content-between">

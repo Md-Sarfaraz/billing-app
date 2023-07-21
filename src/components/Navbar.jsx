@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { HiMiniBars3BottomLeft } from 'react-icons/hi2'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { BiTask } from 'react-icons/bi'
 import { AiOutlineSetting } from 'react-icons/ai'
 
 
-const Navbar = ({setToggle, IsOpen}) => {
-  
+const Navbar = ({ setToggle, IsOpen }) => {
+
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow ">
-            <div className="container-fluid py-1">
-                <div className="collapse navbar-collapse gap-4" >
-                    <a className="nav-link me-auto" onClick={() => { setToggle(!IsOpen) }}>
-                        <HiMiniBars3BottomLeft className='align-middle fw-bolder ms-2' style={{ height: "26px", width: "26px" }} />
-                    </a>
-                    <a className="nav-link " >
-                        <MdOutlineNotifications className='align-middle fw-bolder me-2' style={{ height: "24px", width: "24px" }} />
-                    </a>
-                    <a className="nav-link " >
-                        <BiTask className='align-middle fw-bolder me-2' style={{ height: "24px", width: "24px" }} />
-                    </a>
-                    <a className="nav-link " >
-                        <AiOutlineSetting className='align-middle fw-bolder me-2' style={{ height: "24px", width: "24px" }} />
-                    </a>
+        <nav className="bg-indigo-50 shadow-sm pt-2">
+            <div className="container-fluid">
+                <div className="gap-4 d-flex pt-1 pb-2" >
+                    <div className="nav-link me-auto hover p-2 ms-2" onClick={() => { setToggle(!IsOpen) }}>
+                        <HiMiniBars3BottomLeft className=' fw-bolder ' style={{ height: "26px", width: "26px" }} />
+                    </div>
+                    <div className=" p-2  hover" >
+                        <MdOutlineNotifications className=' fw-bolder ' style={{ height: "26px", width: "26px" }} />
+                    </div>
+                    <div className=" p-2 hover" >
+                        <BiTask className=' fw-bolder  ' style={{ height: "26px", width: "26px" }} />
+                    </div>
+                    <div className=" me-2 p-2 hover" >
+                        <AiOutlineSetting className=' fw-bolder ' style={{ height: "26px", width: "26px" }} />
+                    </div>
                 </div>
             </div>
         </nav>

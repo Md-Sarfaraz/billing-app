@@ -36,3 +36,13 @@
 .cursor-d{
   cursor: default;
 }
+.bg-indigo-50{
+  background-color: #E8EAF6;
+}
+.hover:hover{
+  
+  background-color: rgba(0, 0, 0, 0.07);
+}
+.hover{
+  border-radius: 15%;  
+}
