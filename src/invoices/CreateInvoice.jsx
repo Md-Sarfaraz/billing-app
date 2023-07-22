@@ -15,13 +15,7 @@ const CreateInvoice = () => {
     }]
   })
 
-  useEffect(() => {
-    console.log("invoice :: ", typeof ItemList)
-
-    // console.log("invoice :: ", [...ItemList])
-  }, [])
-
-
+ 
   const addItem = () => {
 
   }
@@ -75,7 +69,7 @@ const CreateInvoice = () => {
       </div>
 
       <div className="">
-        <CustomerDetails />
+        {/* <CustomerDetails /> */}
         <OrderDetailes add={addItem} delete={deleteItem} itemList={ItemList} />
       </div>
     </div>
