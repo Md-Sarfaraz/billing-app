@@ -3,24 +3,43 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomerDetails from './Customer-details';
 import OrderDetailes from './OrderDetailes';
+import { BsPlusSquareFill } from 'react-icons/bs'
 
 
 const CreateInvoice = () => {
   const [startDate, setStartDate] = useState(new Date());
-  const [ItemList, setItemList] = useState({
-    date: "",
-    items: [{
-      id: Math.random(), item: "", quantity: "",
-      price: "", discount: "", subtotal: ""
-    }]
-  })
+  const [productList, setProductList] = useState({
+    customer: { id: "", name: "", address: "", address2: "", city: "", country: "", pincode: "", phone: "" },
+    products: [{ id: Math.random(), product: "", quantity: "", price: "", discount: "220", subtotal: "" }],
+    invoiceNo: "",
+    invoiceDate: ""
+  }
+  )
 
- 
-  const addItem = () => {
+  const handleItem = (e) => {
+
+    if (['id', 'product', 'quantity', 'price', 'discount', 'subtotal'].includes(e.target.name)) {
+      let newproduct = [...productList.products]
+      newproduct[e.target.dataset.id][e.target.name] = e.target.value;
+      setProductList({ ...productList, products: newproduct })
+    } else {
+      setProductList({ [e.target.name]: e.target.value })
+    }
 
   }
-  const deleteItem = () => {
 
+  const addProductRow = () => {
+    let productRow = { id: Math.random(), product: "", quantity: "", price: "", discount: "", subtotal: "" }
+    const test = { ...productList, products: [...productList.products, productRow] }
+    setProductList({ ...productList, products: [...productList.products, productRow] })
+
+  }
+
+  const deleteItemRow = (index) => {
+    if (index === 0) return
+    console.log("filter ::")
+    let filteredProducts = productList.products.filter((s, sindex) => index !== sindex)
+    setProductList({ ...productList, products: filteredProducts })
   }
 
 
@@ -69,8 +88,29 @@ const CreateInvoice = () => {
       </div>
 
       <div className="">
-        {/* <CustomerDetails /> */}
-        <OrderDetailes add={addItem} delete={deleteItem} itemList={ItemList} />
+        <CustomerDetails />
+        <div className="row mx-auto mt-3">
+          <div className="col-md-4 d-flex ps-0">
+            <button type="button" className="btn me-3 px-3 hover" onClick={() => { addProductRow() }}>
+              <BsPlusSquareFill className='text-primary hover' style={{ height: "26px", width: "26px" }} />
+            </button>
+            <p className='ms-3'>Product Name</p>
+          </div>
+          <div className="col-md-2">
+            <p>Quantity</p>
+          </div>
+          <div className="col-md-2">
+            <p>Price</p>
+          </div>
+          <div className="col-md-2">
+            <p>Discount</p>
+          </div>
+          <div className="col-md-2">
+            <p>Sub Total</p>
+          </div>
+        </div>
+        <OrderDetailes addRow={addProductRow} deleteRow={deleteItemRow}
+          handleItem={handleItem} productList={productList} />
       </div>
     </div>
   )
