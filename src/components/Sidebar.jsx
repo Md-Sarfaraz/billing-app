@@ -10,11 +10,10 @@ import { FiLogOut } from 'react-icons/fi'
 
 
 const Sidebar = ({ IsOpen }) => {
-
-
-    return (<nav id="sidebar" className={(IsOpen ? " " : "d-none") + " sidebar "} style={{ transition: "0.7s" }} >
+    return (<nav id="sidebar" style={{ transition: "0.7s" }}
+        className={(IsOpen ? " " : "d-none") + " sidebar "} >
         <div className="d-flex flex-column"
-            style={{ height: "100%", overflow: "hidden" }}>
+            style={{ Height: "100%", overflow: "hidden" }}>
             <Link className="sidebar-brand fs-4 text-white px-3 py-2 fw-semibold shadow-lg" to="/">
                 <span className="align-middle">AdminKit</span>
             </Link >
