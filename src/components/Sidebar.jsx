@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './sidebar.css'
 import { Link } from 'react-router-dom'
 import { BiSolidDashboard, BiUser } from 'react-icons/bi'
@@ -13,7 +13,7 @@ const Sidebar = ({ IsOpen }) => {
     return (<nav id="sidebar" style={{ transition: "0.7s" }}
         className={(IsOpen ? " " : "d-none") + " sidebar "} >
         <div className="d-flex flex-column"
-            style={{ Height: "100%", overflow: "hidden" }}>
+            style={{ Height: "100%", overflow: "auto" }}>
             <Link className="sidebar-brand fs-4 text-white px-3 py-2 fw-semibold shadow-lg" to="/">
                 <span className="align-middle">AdminKit</span>
             </Link >

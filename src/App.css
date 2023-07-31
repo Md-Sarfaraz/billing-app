@@ -9,14 +9,15 @@
 .App {
   position: relative;
   align-items: stretch;
-  background: #222e3c;
+  background: #F5F7FB;
   display: flex;
   width: 100%;
+  height: auto;
   min-height: 100vh;
 }
 
 .main {
-  background: #F5F7FB;
+  /* background: #222e3c; */
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
   display: flex;
@@ -28,22 +29,26 @@
   width: 100%;
 }
 
-.card-title{
+.card-title {
   color: #939ba2;
   font-size: .925rem;
   font-weight: 600;
-  
+
 }
-.cursor-d{
+
+.cursor-d {
   cursor: default;
 }
-.bg-indigo-50{
+
+.bg-indigo-50 {
   background-color: #E8EAF6;
 }
-.hover:hover{
-  
+
+.hover:hover {
+
   background-color: rgba(0, 0, 0, 0.07);
 }
-.hover{
-  border-radius: 15%;  
+
+.hover {
+  border-radius: 15%;
 }

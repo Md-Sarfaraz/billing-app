@@ -5,7 +5,9 @@
   }
   
   .sidebar {
-    height: 100vh;
+    background: #222e3c;
+    height: auto;
+    min-width: 100vh;
     direction: ltr;
     max-width: 260px;
     min-width: 260px;
