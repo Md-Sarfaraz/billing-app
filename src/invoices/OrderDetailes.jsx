@@ -3,7 +3,7 @@ import { PiMinusSquareFill } from 'react-icons/pi'
 import { Button, Modal } from 'react-bootstrap';
 import { BsPlusSquareFill } from 'react-icons/bs';
 
-const OrderDetailes = ({ productList, handleItem, addRow, deleteRow }) => {
+const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
 
   // console.log("OrderList Comp :: ", productList)
   const [show, setShow] = useState(false);
@@ -50,15 +50,13 @@ const OrderDetailes = ({ productList, handleItem, addRow, deleteRow }) => {
           </tr>
         </thead>
         <tbody>
-
-
           {
-            productList.products.map((val, idx) => {
-              return (<tr className="" key={idx}>
+            products.map((val, idx) => {
+              return (<tr className=" " key={idx}>
                 <td className="input-group">
-                  <input type="text" className="form-control" name='product' data-id={idx}
+                  <input type="text" className="form-control" name='name' data-id={idx}
                     value={val.product} onChange={handleItem}
-                    placeholder="Item Name" aria-label="Full Name" />
+                    placeholder="Product Name" aria-label="Full Name" />
                   <button className="btn btn-outline-secondary"
                     type="button" onClick={handleShow}>Choose</button>
                 </td>
@@ -81,8 +79,8 @@ const OrderDetailes = ({ productList, handleItem, addRow, deleteRow }) => {
                     placeholder="Discount" aria-label="Discount" />
                 </td>
                 <td className="col-md-2 ">
-                  <input type="number" className="form-control" name='subtotal' data-id={idx}
-                    value={val.subtotal} onChange={handleItem}
+                  <input type="number" className="form-control" name='subTotal' data-id={idx}
+                    value={val.subTotal} onChange={handleItem}
                     placeholder="SubTotal" aria-label="Subtotal" />
                 </td>
                 <td className='align-middle'>
@@ -93,9 +91,7 @@ const OrderDetailes = ({ productList, handleItem, addRow, deleteRow }) => {
                 </td>
               </tr>)
             })
-
           }
-
         </tbody>
       </table>
     </div>

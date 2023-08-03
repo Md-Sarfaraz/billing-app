@@ -35,6 +35,9 @@
   font-weight: 600;
 
 }
+.animate{
+  transition: all .5s ease;
+}
 
 .cursor-d {
   cursor: default;
