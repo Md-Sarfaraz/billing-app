@@ -6,8 +6,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 
-import Invoices from './invoices/Invoices';
-import CreateInvoice from './invoices/CreateInvoice';
+import Invoices from './invoices/invoices';
+import CreateInvoice from './invoices/create-invoice';
 import Products from './products/Products';
 import AddProduct from './products/AddProduct';
 import Customers from './customers/Customers';
