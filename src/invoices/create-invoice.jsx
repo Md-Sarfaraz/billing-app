@@ -33,19 +33,23 @@ const CreateInvoice = () => {
   )
 
   useEffect(() => {
-    let [stotal, discount, tax, total] = [0, 0, 0, 0]
+   /* let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
+    //let newProduct = [...invoice.products]
     if (isTaxable) {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = (stotal - discount) + isNaN(invoice.shippingCharge) ? invoice.shippingCharge : 0
+      let taxableAmount = parseFloat(stotal) + + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
       tax = CalculateTax(taxableAmount, 18);
-      total = taxableAmount + tax
+      total = parseFloat(taxableAmount) + parseFloat(tax)
     } else {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      total = (stotal - discount) + isNaN(invoice.shippingCharge) ? invoice.shippingCharge : 0
-    }
-    //const { subtotal, discount, tax, total } = CalculateInvoice(isTaxable, invoice)
+      total = parseFloat(stotal) + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
+      console.log("Remove ", [total, discount, stotal])
+    }*/
+
+    const [stotal, discount, tax, total] = calculateAll()
+
     console.log("UE ", [stotal, discount, tax, total])
     setInvoice({
       ...invoice,
@@ -56,21 +60,24 @@ const CreateInvoice = () => {
     })
   }, [isTaxable])
 
-  const calculateAll = ({ charges }) => {
+  const calculateAll = (charges) => {
     let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
+    //let newProduct = [...invoice.products]
     if (isTaxable) {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = (stotal) + (isNaN(charges) ? charges : 0)
+      let taxableAmount = parseFloat(stotal) + + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
       tax = CalculateTax(taxableAmount, 18);
       total = parseFloat(taxableAmount) + parseFloat(tax)
     } else {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      total = stotal + isNaN(charges) ? charges : 0
+      total = parseFloat(stotal) + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
+      console.log("Remove ", [total, discount, stotal])
     }
+    console.log("Calc: ", [charges, tax, total])
+    return [stotal, discount, tax, total];
   }
-
 
   const handleShipping = (e) => {
     if ("shippingCharge".includes(e.target.name)) {
@@ -107,14 +114,6 @@ const CreateInvoice = () => {
   const handleInputs = (e) => {
     let newProduct = [...invoice.products]
 
-    // if ("shippingCharge".includes(e.target.name)) {
-    //   var val = e.target.value;
-    //   console.log("ship :", invoice.shippingCharge, ": ", val)
-    //   // setInvoice({ ...invoice, shippingCharge: e.target.value })
-    //   setInvoice({ ...invoice, shippingCharge: val })
-
-    // }
-
     if (Object.keys(productTemp).includes(e.target.name)) {
       if ('subTotal'.includes(e.target.name)) return
       let pid = e.target.dataset.id
@@ -124,7 +123,7 @@ const CreateInvoice = () => {
         newProduct[pid].subTotal = newProduct[pid].subTotal - + newProduct[pid].discount
     }
 
-    let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
+    /*let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
     if (isTaxable) {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
@@ -135,7 +134,8 @@ const CreateInvoice = () => {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
       total = (stotal - discount) + isNaN(invoice.shippingCharge) ? invoice.shippingCharge : 0
-    }
+    }*/
+    const [stotal, discount, tax, total] = calculateAll()
     console.log("Handle ", [stotal, discount, tax, total, invoice.shippingCharge])
     setInvoice({
       ...invoice,
