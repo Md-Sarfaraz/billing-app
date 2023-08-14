@@ -33,23 +33,7 @@ const CreateInvoice = () => {
   )
 
   useEffect(() => {
-   /* let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
-    //let newProduct = [...invoice.products]
-    if (isTaxable) {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = parseFloat(stotal) + + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
-      tax = CalculateTax(taxableAmount, 18);
-      total = parseFloat(taxableAmount) + parseFloat(tax)
-    } else {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      total = parseFloat(stotal) + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
-      console.log("Remove ", [total, discount, stotal])
-    }*/
-
     const [stotal, discount, tax, total] = calculateAll()
-
     console.log("UE ", [stotal, discount, tax, total])
     setInvoice({
       ...invoice,
@@ -82,20 +66,8 @@ const CreateInvoice = () => {
   const handleShipping = (e) => {
     if ("shippingCharge".includes(e.target.name)) {
       var charges = e.target.value;
-      let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
       let newProduct = [...invoice.products]
-      if (isTaxable) {
-        discount = CalculateSum(invoice.products, 'discount')
-        stotal = CalculateSum(invoice.products, 'subTotal')
-        let taxableAmount = parseFloat(stotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
-        tax = CalculateTax(taxableAmount, 18);
-        total = parseFloat(taxableAmount) + parseFloat(tax)
-      } else {
-        discount = CalculateSum(invoice.products, 'discount')
-        stotal = CalculateSum(invoice.products, 'subTotal')
-        total = parseFloat(stotal) + (isNaN(charges) ? 0.0 : parseFloat(charges))
-        console.log("Remove ", [total, discount, stotal])
-      }
+      const [stotal, discount, tax, total] = calculateAll()
       console.log("HandleShipping ", [charges, tax, total])
       setInvoice({
         ...invoice,
@@ -123,18 +95,6 @@ const CreateInvoice = () => {
         newProduct[pid].subTotal = newProduct[pid].subTotal - + newProduct[pid].discount
     }
 
-    /*let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
-    if (isTaxable) {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = (stotal) + (isNaN(invoice.shippingCharge) ? invoice.shippingCharge : 0)
-      tax = CalculateTax(taxableAmount, 18);
-      total = parseFloat(taxableAmount) + parseFloat(tax)
-    } else {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      total = (stotal - discount) + isNaN(invoice.shippingCharge) ? invoice.shippingCharge : 0
-    }*/
     const [stotal, discount, tax, total] = calculateAll()
     console.log("Handle ", [stotal, discount, tax, total, invoice.shippingCharge])
     setInvoice({
@@ -146,6 +106,9 @@ const CreateInvoice = () => {
       total: total,
     })
 
+  }
+  const handleCreateInvoice = (e) => {
+    console.log(invoice)
   }
 
   const handleCustomer = (e) => {
@@ -254,7 +217,8 @@ const CreateInvoice = () => {
 
         </div>
         <div className="col-12 mt-4">
-          <button type="button" className="btn btn-success float-end">Create Invoice</button>
+          <button type="button" className="btn btn-success float-end"
+            onClick={handleCreateInvoice}>Create Invoice</button>
         </div>
       </div>
     </div>
