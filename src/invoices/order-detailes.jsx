@@ -79,7 +79,7 @@ const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
                     placeholder="Discount" aria-label="Discount" />
                 </td>
                 <td className="col-md-2 ">
-                  <input type="number" className="form-control" name='subTotal' data-id={idx}
+                  <input type="number" disabled className="form-control" name='subTotal' data-id={idx}
                     value={val.subTotal} onChange={handleItem}
                     placeholder="SubTotal" aria-label="Subtotal" />
                 </td>

@@ -12,8 +12,8 @@ const CalculateSum = (arr, property) => {
     return parseFloat(sum).toFixed(2);
 }
 
-function CalculateTax(amount, rate) {
-    return (amount * rate / 100).toFixed(2);
+function CalculateTax(amount) {
+    return (amount * 0.18).toFixed(2);
 }
 
 const CalculateInvoice = (isTaxable, data) => {

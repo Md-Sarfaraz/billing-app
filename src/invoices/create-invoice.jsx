@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomerDetails from '../customers/customer-details';
 import OrderDetailes from './order-detailes';
-import { CalculateInvoice, CalculateSum, CalculateTax } from '../utility/calculation';
+import { CalculateSum, CalculateTax } from '../utility/calculation';
 
 
 const CreateInvoice = () => {
@@ -45,30 +45,34 @@ const CreateInvoice = () => {
   }, [isTaxable])
 
   const calculateAll = (charges) => {
+
     let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
     //let newProduct = [...invoice.products]
     if (isTaxable) {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = parseFloat(stotal) + + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
-      tax = CalculateTax(taxableAmount, 18);
+      let taxableAmount = parseFloat(stotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
+      tax = CalculateTax(taxableAmount);
       total = parseFloat(taxableAmount) + parseFloat(tax)
+      let ship = invoice.shippingCharge;
+      console.log("taxable: ", { taxableAmount, ship, tax, total })
     } else {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
-      total = parseFloat(stotal) + (isNaN(invoice.shippingCharge) ? 0.0 : parseFloat(invoice.shippingCharge))
-      console.log("Remove ", [total, discount, stotal])
+      total = parseFloat(stotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
+      console.log("WithoutTax ", { total, discount, stotal })
     }
-    console.log("Calc: ", [charges, tax, total])
     return [stotal, discount, tax, total];
+
+
   }
 
   const handleShipping = (e) => {
     if ("shippingCharge".includes(e.target.name)) {
       var charges = e.target.value;
       let newProduct = [...invoice.products]
-      const [stotal, discount, tax, total] = calculateAll()
-      console.log("HandleShipping ", [charges, tax, total])
+      const [stotal, discount, tax, total] = calculateAll(charges)
+      console.log("HandleShipping ", { charges, tax, total })
       setInvoice({
         ...invoice,
         products: newProduct,
@@ -91,12 +95,12 @@ const CreateInvoice = () => {
       let pid = e.target.dataset.id
       newProduct[pid][e.target.name] = e.target.value;
       newProduct[pid].subTotal = (newProduct[pid].quantity * newProduct[pid].price)
-      if ('discount'.includes(e.target.name))
+      if (['discount','quantity','price'].includes(e.target.name)   )  // TODO
         newProduct[pid].subTotal = newProduct[pid].subTotal - + newProduct[pid].discount
     }
 
     const [stotal, discount, tax, total] = calculateAll()
-    console.log("Handle ", [stotal, discount, tax, total, invoice.shippingCharge])
+    //console.log("Handle ", [stotal, discount, tax, total, invoice.shippingCharge])
     setInvoice({
       ...invoice,
       products: newProduct,
