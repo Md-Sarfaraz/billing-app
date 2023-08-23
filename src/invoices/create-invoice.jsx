@@ -9,7 +9,7 @@ import { CalculateSum, CalculateTax } from '../utility/calculation';
 const CreateInvoice = () => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const productTemp = { id: "", name: "", desc: "", quantity: "", type: "", price: "", discount: "", subTotal: "" };
+  const productTemp = { id: Date.now(), name: "", desc: "", quantity: "", type: "", price: "", discount: 0.0, subTotal: 0.0 };
   const customerTemp = { id: "", name: "", email: "", address1: "", address2: "", city: "", pincode: "", phone: "" };
   const shippingTemp = { id: "", name: "", address1: "", address2: "", city: "", pincode: "" };
 
@@ -55,7 +55,7 @@ const CreateInvoice = () => {
       tax = CalculateTax(taxableAmount);
       total = parseFloat(taxableAmount) + parseFloat(tax)
       let ship = invoice.shippingCharge;
-      console.log("taxable: ", { taxableAmount, ship, tax, total })
+      console.log("taxable: ", { stotal, taxableAmount, ship, tax, total })
     } else {
       discount = CalculateSum(invoice.products, 'discount')
       stotal = CalculateSum(invoice.products, 'subTotal')
@@ -95,12 +95,11 @@ const CreateInvoice = () => {
       let pid = e.target.dataset.id
       newProduct[pid][e.target.name] = e.target.value;
       newProduct[pid].subTotal = (newProduct[pid].quantity * newProduct[pid].price)
-      if (['discount','quantity','price'].includes(e.target.name)   )  // TODO
+      if (['discount', 'quantity', 'price'].includes(e.target.name))
         newProduct[pid].subTotal = newProduct[pid].subTotal - + newProduct[pid].discount
     }
 
-    const [stotal, discount, tax, total] = calculateAll()
-    //console.log("Handle ", [stotal, discount, tax, total, invoice.shippingCharge])
+    const [stotal, discount, tax, total] = calculateAll(0)
     setInvoice({
       ...invoice,
       products: newProduct,
@@ -109,7 +108,6 @@ const CreateInvoice = () => {
       tax: tax,
       total: total,
     })
-
   }
   const handleCreateInvoice = (e) => {
     console.log(invoice)
@@ -121,11 +119,10 @@ const CreateInvoice = () => {
       newCustomer[e.target.name] = e.target.value;
       setInvoice({ ...invoice, customer: newCustomer })
     }
-
   }
 
   const addProductRow = () => {
-    let productRow = { ...productTemp, id: Math.random(), }
+    let productRow = { ...productTemp, id: Date.now(), }
     setInvoice({ ...invoice, products: [...invoice.products, productRow] })
   }
 
@@ -145,7 +142,6 @@ const CreateInvoice = () => {
       <h1 className='h3 mb-3 text-secondary'>Create New Invoice</h1>
       <div className="d-flex justify-content-end w-100">
         <div className="d-flex flex-column">
-
           <div className="d-flex gap-3 justify-content-end">
             <div className="w-25 ">
               <h5 className="h5 ">Select Type: </h5>
@@ -161,8 +157,9 @@ const CreateInvoice = () => {
             </div>
             <div className="form-group">
               <div className="input-group mb-3">
-                <DatePicker className='border rounded' selected={startDate} onChange={(date) => setStartDate(date)}
-                  dateFormat="dd-MM-yyyy" showIcon isClearable placeholderText="Invoice Date" />
+                <DatePicker className='border rounded' placeholderText="Invoice Date"
+                  selected={startDate} onChange={(date) => setStartDate(date)}
+                  dateFormat="dd-MM-yyyy" showIcon isClearable />
               </div>
             </ div>
             <div className="form-group ">

@@ -3,10 +3,11 @@
 const CalculateSum = (arr, property) => {
     let sum = 0.0;
     if (!Array.isArray(arr)) return 0;
-    arr.forEach(element => {
-        if (isNaN(element[property])) return 0
-        if (element[property].lenght === 0) return 0
-        sum = sum + parseFloat(element[property]);
+    arr.forEach((element, index) => {
+        // TODO if NaN treat as a 0.0 float
+        if (isNaN(element[property])) return sum
+        if (element[property].lenght === 0) return sum
+        sum = sum + + parseFloat(element[property]);
     });
     if (isNaN(sum)) return parseFloat(0).toFixed(2);
     return parseFloat(sum).toFixed(2);
