@@ -9,7 +9,7 @@ import { CalculateSum, CalculateTax } from '../utility/calculation';
 const CreateInvoice = () => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const productTemp = { id: Date.now(), name: "", desc: "", quantity: "", type: "", price: "", discount: 0.0, subTotal: 0.0 };
+  const productTemp = { id: Date.now(), name: "", desc: "", quantity: "", type: "", price: "", subTotal: 0.0 };
   const customerTemp = { id: "", name: "", email: "", address1: "", address2: "", city: "", pincode: "", phone: "" };
   const shippingTemp = { id: "", name: "", address1: "", address2: "", city: "", pincode: "" };
 
@@ -22,7 +22,6 @@ const CreateInvoice = () => {
     type: "",
     notes: "",
     subTotal: 0.0,
-    discount: 0.0,
     tax: 0.0,
     total: 0.0,
     shippingCharge: 0.0,
@@ -33,59 +32,51 @@ const CreateInvoice = () => {
   )
 
   useEffect(() => {
-    const [stotal, discount, tax, total] = calculateAll()
-    console.log("UE ", [stotal, discount, tax, total])
+    const [stotal, tax, total] = calculateAll(0)
+    console.log("UE ", [stotal, tax, total])
     setInvoice({
       ...invoice,
       subTotal: stotal,
-      discount: discount,
       tax: tax,
       total: total,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTaxable])
 
   const calculateAll = (charges) => {
-
-    let [stotal, discount, tax, total] = [0.0, 0.0, 0.0, 0.0]
-    //let newProduct = [...invoice.products]
+    let [subtotal, tax, total] = [0.0, 0.0, 0.0]
     if (isTaxable) {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      let taxableAmount = parseFloat(stotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
+      subtotal = CalculateSum(invoice.products, 'subTotal')
+      let taxableAmount = parseFloat(subtotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
       tax = CalculateTax(taxableAmount);
       total = parseFloat(taxableAmount) + parseFloat(tax)
       let ship = invoice.shippingCharge;
-      console.log("taxable: ", { stotal, taxableAmount, ship, tax, total })
+      console.log("taxable: ", { subtotal, taxableAmount, ship, tax, total })
     } else {
-      discount = CalculateSum(invoice.products, 'discount')
-      stotal = CalculateSum(invoice.products, 'subTotal')
-      total = parseFloat(stotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
-      console.log("WithoutTax ", { total, discount, stotal })
+      subtotal = CalculateSum(invoice.products, 'subTotal')
+      total = parseFloat(subtotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
+      console.log("WithoutTax ", { total, subtotal })
     }
-    return [stotal, discount, tax, total];
-
-
+    return [subtotal, tax, total];
   }
 
-  const handleShipping = (e) => {
+  const handleShippingCharges = (e) => {
     if ("shippingCharge".includes(e.target.name)) {
       var charges = e.target.value;
       let newProduct = [...invoice.products]
-      const [stotal, discount, tax, total] = calculateAll(charges)
+      const [stotal, tax, total] = calculateAll(charges)
       console.log("HandleShipping ", { charges, tax, total })
       setInvoice({
         ...invoice,
         products: newProduct,
         shippingCharge: charges,
         subTotal: stotal,
-        discount: isNaN(discount) ? "" : discount,
         tax: tax,
         total: total.toFixed(2),
       })
     }
 
   }
-
 
   const handleInputs = (e) => {
     let newProduct = [...invoice.products]
@@ -95,16 +86,13 @@ const CreateInvoice = () => {
       let pid = e.target.dataset.id
       newProduct[pid][e.target.name] = e.target.value;
       newProduct[pid].subTotal = (newProduct[pid].quantity * newProduct[pid].price)
-      if (['discount', 'quantity', 'price'].includes(e.target.name))
-        newProduct[pid].subTotal = newProduct[pid].subTotal - + newProduct[pid].discount
     }
 
-    const [stotal, discount, tax, total] = calculateAll(0)
+    const [subtotal, tax, total] = calculateAll(0)
     setInvoice({
       ...invoice,
       products: newProduct,
-      subTotal: stotal,
-      discount: isNaN(discount) ? "" : discount,
+      subTotal: subtotal,
       tax: tax,
       total: total,
     })
@@ -114,10 +102,26 @@ const CreateInvoice = () => {
   }
 
   const handleCustomer = (e) => {
-    if (Object.keys(customerTemp).includes(e.target.name)) {
+    const name = e.target.name;
+    const val = e.target.value
+    if (Object.keys(customerTemp).includes(name)) {
       let newCustomer = { ...invoice.customer }
-      newCustomer[e.target.name] = e.target.value;
-      setInvoice({ ...invoice, customer: newCustomer })
+      newCustomer[name] = val;
+      if (Object.keys(shippingTemp).includes(name)) {
+        let newShipping = { ...invoice.shipping }
+        newShipping[e.target.name] = e.target.value;
+        setInvoice({ ...invoice, shipping: newShipping, customer: newCustomer })
+      } else {
+        setInvoice({ ...invoice, customer: newCustomer })
+      }
+    }
+  }
+
+  const handleShipping = (e) => {
+    if (Object.keys(shippingTemp).includes(e.target.name)) {
+      let newShipping = { ...invoice.shipping }
+      newShipping[e.target.name] = e.target.value;
+      setInvoice({ ...invoice, shipping: newShipping })
     }
   }
 
@@ -173,7 +177,9 @@ const CreateInvoice = () => {
       </div>
 
       <div className="">
-        <CustomerDetails selectExisting={true} customer={invoice.customer} handleCustomer={handleCustomer} />
+        <CustomerDetails selectExisting={true}
+          customer={invoice.customer} handleCustomer={handleCustomer}
+          shipping={invoice.shipping} handleShipping={handleShipping} />
         <div className="mt-3 col-12 ">
           <OrderDetailes addRow={addProductRow} deleteRow={deleteItemRow}
             handleItem={handleInputs} products={invoice.products} />
@@ -184,7 +190,7 @@ const CreateInvoice = () => {
       <div className="row mt-4">
         <div className="col-md-6 col-12 ">
           <div className="form-floating">
-            <textarea className="form-control" style={{ "height": "10rem" }}
+            <textarea className="form-control" style={{ "height": "8rem" }}
               placeholder="Additional Notes" id="additionalnotes"></textarea>
             <label htmlFor="floatingTextarea">Additional Notes</label>
           </div>
@@ -193,12 +199,11 @@ const CreateInvoice = () => {
           <div className="row align-items-center">
             <div className="col-6 col-md-8  "><p className='mb-1 fw-bold float-end'>Sub Total :</p></div>
             <div className="col-6 col-md-4  pe-4"><p className='mb-1  float-end'> {invoice.subTotal}</p></div>
-            <div className="col-6 col-md-8  "><p className='mb-1 fw-bold float-end'>Discount :</p></div>
-            <div className="col-6 col-md-4  pe-4"><p className='mb-1  float-end'> {invoice.discount}</p></div>
+
             <div className="col-6 col-md-8  "><p className='mb-1 fw-bold float-end'>Shipping :</p></div>
             <div className="col-6 col-md-4  ">
               <input type="number" className="form-control form-control-sm" name='shippingCharge'
-                value={invoice.shippingCharge} onChange={handleShipping}
+                value={invoice.shippingCharge} onChange={handleShippingCharges}
                 placeholder="Shipping" aria-label="Shipping" />
             </div>
             <div className="col-6 col-md-8  "><p className='mb-1 fw-bold float-end'>TAX/VAT 18% :</p></div>

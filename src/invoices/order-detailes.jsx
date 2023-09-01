@@ -40,7 +40,7 @@ const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
             <th scope="col">Product Name</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
-            <th scope="col">Discount</th>
+
             <th scope="col">Sub Total</th>
             <th scope="col align-middle ">
               <button type="button" className=" hover" onClick={() => { addRow() }}>
@@ -73,11 +73,6 @@ const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
                     placeholder="Price" aria-label="Price" />
                 </td>
 
-                <td className="col-md-2  ">
-                  <input type="number" className="form-control" name='discount' data-id={idx}
-                    value={val.discount} onChange={handleItem}
-                    placeholder="Discount" aria-label="Discount" />
-                </td>
                 <td className="col-md-2 ">
                   <input type="number" disabled className="form-control" name='subTotal' data-id={idx}
                     value={val.subTotal} onChange={handleItem}

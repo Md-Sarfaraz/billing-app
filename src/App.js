@@ -10,8 +10,8 @@ import Invoices from './invoices/invoices';
 import CreateInvoice from './invoices/create-invoice';
 import Products from './products/Products';
 import AddProduct from './products/AddProduct';
-import Customers from './customers/Customers';
-import AddCustomer from './customers/AddCustomer'
+import CustomerList from './customers/customer-list';
+import AddCustomer from './customers/customer-add'
 import Navbar from './components/Navbar';
 
 function App() {
@@ -20,9 +20,9 @@ function App() {
 
 
   return (<div className="App justify-content-between">
-    <Sidebar IsOpen={IsOpen}/>
+    <Sidebar IsOpen={IsOpen} />
     <div className='main'>
-      <Navbar IsOpen={IsOpen} setToggle={setIsOpen}/>
+      <Navbar IsOpen={IsOpen} setToggle={setIsOpen} />
 
       <Routes>
         <Route path="/" element={<Dashboard />} />
@@ -32,8 +32,8 @@ function App() {
         <Route path="/product/list" element={<Products />} />
         <Route path="/product/addproduct" element={<AddProduct />} />
         <Route path="/customer/addcustomer" element={<AddCustomer />} />
-        <Route path="/customer/list" element={<Customers />} />
-        <Route path="/system" element={<Customers />} />
+        <Route path="/customer/list" element={<CustomerList />} />
+        <Route path="/system" element={<CustomerList />} />
       </Routes>
 
     </div>

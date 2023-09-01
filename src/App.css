@@ -35,12 +35,17 @@
   font-weight: 600;
 
 }
-.animate{
+
+.animate {
   transition: all .5s ease;
 }
 
 .cursor-d {
   cursor: default;
+}
+
+.cursor-pointer {
+  cursor: pointer
 }
 
 .bg-indigo-50 {
@@ -52,6 +57,6 @@
   background-color: rgba(0, 0, 0, 0.07);
 }
 
-.hover {
-  border-radius: 15%;
+.hover-25 {
+  border-radius: 25%;
 }
