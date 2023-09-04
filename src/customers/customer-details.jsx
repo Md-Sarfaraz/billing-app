@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { MdEmail } from 'react-icons/md'
 import { Button, Modal } from 'react-bootstrap';
-import Select from 'react-select'
+import AsyncSelect from 'react-select/async';
 import { customerData } from '../test-data/table-data';
 
 
 const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, handleCustomer }) => {
     const [show, setShow] = useState(false);
-
+    const [selectCustomer, setSelectCustomer] = useState({
+        id: "", name: "", email: "", city: "", phone: ""
+    });
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const options = customerData.reduce((res, item) => {
@@ -16,9 +18,36 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
     }, [])
 
     useEffect(() => {
-        console.log("Select Options ", options)
+        //console.log("Select Options ", options)
 
     }, [])
+
+    const filterCustomers = (inputValue) => {
+        return options.filter((i) =>
+            i.label.toLowerCase().includes(inputValue.toLowerCase())
+        );
+    };
+
+    const loadOptions = (inputValue, callback) => {
+        setTimeout(() => {
+            callback(filterCustomers(inputValue))
+        }, 500)
+    }
+    const getOptions = (e) => {
+        var val = customerData.find(item => item.id === e.value)
+        setSelectCustomer({
+            id: val.id,
+            name: val.fullName,
+            email: val.email,
+            city: val.city,
+            phone: val.phone
+        })
+    }
+
+    const handleSelectCustomer = () => {
+
+    }
+
 
 
 
@@ -29,36 +58,37 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
                 <Modal.Title>Select Customer</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Select options={options} />
+                <AsyncSelect cacheOptions loadOptions={loadOptions} defaultValue={""}
+                    onChange={(e) => getOptions(e)} onMenuClose={(e) => console.log(e)}
+                    defaultOptions />
                 <div className="row mt-3">
                     <div className=" col-12 mb-3">
                         <input type="text" className="form-control" placeholder="Full Name"
-                            aria-label="Full Name" name="name" value={customer.name} />
-                        <input type="text" className="d-none"
-                            value={customer.id} />
+                            aria-label="Full Name" name="name" value={selectCustomer.name} disabled />
+                        <input type="text" className="d-none" disabled
+                            value={selectCustomer.id} />
                     </div>
                     <div className="col-12 mb-3">
                         <div className="input-group">
-                            <input type="text" name="email" className="form-control"
-                                placeholder="Email" value={customer.email} />
+                            <input type="text" name="email" className="form-control" disabled
+                                placeholder="Email" value={selectCustomer.email} />
                         </div>
                     </div>
                     <div className="col--12 mb-3">
-                        <input type="text" className="form-control" name="city"
+                        <input type="text" className="form-control" name="city" disabled
                             placeholder="City" aria-label="city"
-                            value={customer.city} />
+                            value={selectCustomer.city} />
                     </div>
                     <div className="col-12 mb-3">
                         <input type="text" className="form-control" name="phone"
                             placeholder="Phone Number" aria-label="Phone Number"
-                            value={customer.phone} />
+                            value={selectCustomer.phone} disabled />
                     </div>
                 </div>
-
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>Close</Button>
-                <Button variant="primary" onClick={handleClose}>Select</Button>
+                <Button variant="primary" onClick={handleSelectCustomer}>Select</Button>
             </Modal.Footer>
         </Modal>
         <div className="row">
