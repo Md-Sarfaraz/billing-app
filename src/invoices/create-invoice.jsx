@@ -4,15 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomerDetails from '../customers/customer-details';
 import OrderDetailes from './order-detailes';
 import { CalculateSum, CalculateTax } from '../utility/calculation';
+import { customerTemp, shippingTemp, productTemp } from '../utility/template';
 
 
 const CreateInvoice = () => {
   const [startDate, setStartDate] = useState(new Date());
-
-  const productTemp = { id: Date.now(), name: "", desc: "", quantity: "", type: "", price: "", subTotal: 0.0 };
-  const customerTemp = { id: "", name: "", email: "", address1: "", address2: "", city: "", pincode: "", phone: "" };
-  const shippingTemp = { id: "", name: "", address1: "", address2: "", city: "", pincode: "" };
-
   const [isTaxable, setIsTaxable] = useState(true)
 
   const [invoice, setInvoice] = useState({
@@ -102,9 +98,10 @@ const CreateInvoice = () => {
   }
 
   const handleCustomer = (e) => {
-    const name = e.target.name;
-    const val = e.target.value
-    if (Object.keys(customerTemp).includes(name)) {
+
+    if (Object.keys(customerTemp).includes(e.target.name)) {
+      const name = e.target.name;
+      const val = e.target.value
       let newCustomer = { ...invoice.customer }
       newCustomer[name] = val;
       if (Object.keys(shippingTemp).includes(name)) {
@@ -115,6 +112,11 @@ const CreateInvoice = () => {
         setInvoice({ ...invoice, customer: newCustomer })
       }
     }
+  }
+
+  const handleSelectExisting = (obj) => {
+    setInvoice({ ...invoice, customer: obj })
+    console.log("Select Existing : ", obj)
   }
 
   const handleShipping = (e) => {
@@ -177,7 +179,7 @@ const CreateInvoice = () => {
       </div>
 
       <div className="">
-        <CustomerDetails selectExisting={true}
+        <CustomerDetails selectExisting={true} handleSelectExisting={handleSelectExisting}
           customer={invoice.customer} handleCustomer={handleCustomer}
           shipping={invoice.shipping} handleShipping={handleShipping} />
         <div className="mt-3 col-12 ">

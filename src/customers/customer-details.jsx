@@ -3,13 +3,13 @@ import { MdEmail } from 'react-icons/md'
 import { Button, Modal } from 'react-bootstrap';
 import AsyncSelect from 'react-select/async';
 import { customerData } from '../test-data/table-data';
+import {customerTemp} from "../utility/template"
 
 
-const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, handleCustomer }) => {
+const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipping, handleShipping, handleCustomer }) => {
     const [show, setShow] = useState(false);
-    const [selectCustomer, setSelectCustomer] = useState({
-        id: "", name: "", email: "", city: "", phone: ""
-    });
+    
+    const [selectCustomer, setSelectCustomer] = useState(customerTemp);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const options = customerData.reduce((res, item) => {
@@ -35,17 +35,12 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
     }
     const getOptions = (e) => {
         var val = customerData.find(item => item.id === e.value)
-        setSelectCustomer({
-            id: val.id,
-            name: val.fullName,
-            email: val.email,
-            city: val.city,
-            phone: val.phone
-        })
+        setSelectCustomer({ ...val })
     }
 
     const handleSelectCustomer = () => {
-
+        setShow(false);
+        handleSelectExisting(selectCustomer)
     }
 
 
@@ -59,12 +54,12 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
             </Modal.Header>
             <Modal.Body>
                 <AsyncSelect cacheOptions loadOptions={loadOptions} defaultValue={""}
-                    onChange={(e) => getOptions(e)} onMenuClose={(e) => console.log(e)}
+                    onChange={(e) => getOptions(e)} //onMenuClose={(e) => console.log(e)}
                     defaultOptions />
                 <div className="row mt-3">
                     <div className=" col-12 mb-3">
                         <input type="text" className="form-control" placeholder="Full Name"
-                            aria-label="Full Name" name="name" value={selectCustomer.name} disabled />
+                            aria-label="Full Name" name="fullName" value={selectCustomer.fullName} disabled />
                         <input type="text" className="d-none" disabled
                             value={selectCustomer.id} />
                     </div>
@@ -104,7 +99,7 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
                         <div className="row">
                             <div className=" col-12 mb-3">
                                 <input type="text" className="form-control" placeholder="Full Name" aria-label="Full Name"
-                                    name="name" value={customer.name} onChange={handleCustomer} />
+                                    name="fullName" value={customer.fullName} onChange={handleCustomer} />
                                 <input type="text" className="d-none"
                                     value={customer.id} onChange={handleCustomer} />
                             </div>
@@ -156,7 +151,7 @@ const CustomerDetails = ({ selectExisting, customer, shipping, handleShipping, h
                         <div className="row">
                             <div className="col-12 mb-3">
                                 <input type="text" className="form-control" placeholder="Full Name"
-                                    name='name' value={shipping.name} onChange={handleShipping} />
+                                    name='fullName' value={shipping.fullName} onChange={handleShipping} />
                             </div>
 
                             <div className="col-lg-6 col-sm-12 mb-3">
