@@ -28,7 +28,7 @@ const CreateInvoice = () => {
   )
 
   useEffect(() => {
-    const [stotal, tax, total] = calculateAll(0)
+    const [stotal, tax, total] = calculateAll(invoice.shippingCharge)
     console.log("UE ", [stotal, tax, total])
     setInvoice({
       ...invoice,
@@ -51,7 +51,8 @@ const CreateInvoice = () => {
     } else {
       subtotal = CalculateSum(invoice.products, 'subTotal')
       total = parseFloat(subtotal) + + (isNaN(charges) ? 0.0 : parseFloat(charges))
-      console.log("WithoutTax ", { total, subtotal })
+      let ship = invoice.shippingCharge;
+      console.log("WithoutTax ", { total, subtotal, ship })
     }
     return [subtotal, tax, total];
   }
@@ -115,7 +116,19 @@ const CreateInvoice = () => {
   }
 
   const handleSelectExisting = (obj) => {
-    setInvoice({ ...invoice, customer: obj })
+    Object.keys(obj).forEach(key => {
+      if (obj[key] === null) obj[key] = ""
+    });
+    setInvoice({
+      ...invoice, customer: obj, shipping: {
+        id: obj.id,
+        fullName: obj.fullName,
+        address1: obj.address1,
+        address2: obj.address2,
+        city: obj.city,
+        pincode: obj.pincode
+      }
+    })
     console.log("Select Existing : ", obj)
   }
 
@@ -145,7 +158,10 @@ const CreateInvoice = () => {
 
   return (
     <div className='p-5'>
-      <h1 className='h3 mb-3 text-secondary'>Create New Invoice</h1>
+      <div className="d-flex justify-content-between">
+        <h3 className='h3 mb-3 text-secondary'>Create New Invoice</h3>
+        <h3 className='h5  text-secondary'>Last Invoice Number : MD-5945</h3>
+      </div>
       <div className="d-flex justify-content-end w-100">
         <div className="d-flex flex-column">
           <div className="d-flex gap-3 justify-content-end">
