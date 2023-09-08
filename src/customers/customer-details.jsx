@@ -3,12 +3,12 @@ import { MdEmail } from 'react-icons/md'
 import { Button, Modal } from 'react-bootstrap';
 import AsyncSelect from 'react-select/async';
 import { customerData } from '../test-data/table-data';
-import {customerTemp} from "../utility/template"
+import { customerTemp } from "../utility/template"
 
 
 const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipping, handleShipping, handleCustomer }) => {
     const [show, setShow] = useState(false);
-    
+
     const [selectCustomer, setSelectCustomer] = useState(customerTemp);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -53,7 +53,7 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                 <Modal.Title>Select Customer</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <AsyncSelect cacheOptions loadOptions={loadOptions} defaultValue={""}
+                <AsyncSelect cacheOptions loadOptions={loadOptions} defaultValue={""} isSearchable={false}
                     onChange={(e) => getOptions(e)} //onMenuClose={(e) => console.log(e)}
                     defaultOptions />
                 <div className="row mt-3">

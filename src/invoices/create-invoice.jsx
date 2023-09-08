@@ -12,9 +12,9 @@ const CreateInvoice = () => {
   const [isTaxable, setIsTaxable] = useState(true)
 
   const [invoice, setInvoice] = useState({
-    invoiceId: "",
+    id: "",
     invoiceNo: "",
-    invoiceDate: "",
+    invoiceDate: new Date(),
     type: "",
     notes: "",
     subTotal: 0.0,
@@ -30,6 +30,10 @@ const CreateInvoice = () => {
   useEffect(() => {
     const [stotal, tax, total] = calculateAll(invoice.shippingCharge)
     console.log("UE ", [stotal, tax, total])
+    var today = new Date();
+    today.getUTCDate()
+    console.log("UE Date : ", today.getUTCDate())
+    console.log("UE Date : ", today.toLocaleDateString())
     setInvoice({
       ...invoice,
       subTotal: stotal,
@@ -170,7 +174,8 @@ const CreateInvoice = () => {
             </div>
             <div className="form-group w-25">
               <div className="input-group input-group-sm ">
-                <select name="invoice_type" id="invoice_type" className="form-select ">
+                <select name="invoice_type" id="invoice_type" className="form-select "
+                  onChange={(type) => setInvoice({ ...invoice, type: type })}  >
                   <option value="invoice" defaultValue={""}>Invoice</option>
                   <option value="quote">Quote</option>
                   <option value="receipt">Receipt</option>
@@ -180,14 +185,15 @@ const CreateInvoice = () => {
             <div className="form-group">
               <div className="input-group mb-3">
                 <DatePicker className='border rounded' placeholderText="Invoice Date"
-                  selected={startDate} onChange={(date) => setStartDate(date)}
+                  selected={invoice.invoiceDate} onChange={(date) => setInvoice({ ...invoice, invoiceDate: date })}
                   dateFormat="dd-MM-yyyy" showIcon isClearable />
               </div>
             </ div>
             <div className="form-group ">
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">#MD</span>
-                <input type="text" className="form-control" placeholder="Invoice Number" />
+                <input type="text" className="form-control" placeholder="Invoice Number"
+                  value={invoice.invoiceNo} onChange={(num) => setInvoice({ ...invoice, invoiceNo: num })} />
               </div>
             </div>
           </div>
