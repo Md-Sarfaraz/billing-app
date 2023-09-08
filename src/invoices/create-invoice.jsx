@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
+import Select from 'react-select'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomerDetails from '../customers/customer-details';
 import OrderDetailes from './order-detailes';
@@ -8,9 +9,16 @@ import { customerTemp, shippingTemp, productTemp } from '../utility/template';
 
 
 const CreateInvoice = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  //const [startDate, setStartDate] = useState(new Date());
   const [isTaxable, setIsTaxable] = useState(true)
+  const invoiceTypes = [
+    { value: 'invoice', label: 'Invoice', color: '#00875A' },
+    { value: 'qoute', label: 'Quote', color: '#253858' },
+    { value: 'receipt', label: 'Receipt', color: '#666666' },
+  ]
 
+  
+  
   const [invoice, setInvoice] = useState({
     id: "",
     invoiceNo: "",
@@ -112,6 +120,7 @@ const CreateInvoice = () => {
       if (Object.keys(shippingTemp).includes(name)) {
         let newShipping = { ...invoice.shipping }
         newShipping[e.target.name] = e.target.value;
+
         setInvoice({ ...invoice, shipping: newShipping, customer: newCustomer })
       } else {
         setInvoice({ ...invoice, customer: newCustomer })
@@ -173,13 +182,20 @@ const CreateInvoice = () => {
               <h5 className="h5 ">Select Type: </h5>
             </div>
             <div className="form-group w-25">
-              <div className="input-group input-group-sm ">
+              <div className="input-group ">
+                {/* //input-group input-group-sm
                 <select name="invoice_type" id="invoice_type" className="form-select "
                   onChange={(type) => setInvoice({ ...invoice, type: type })}  >
                   <option value="invoice" defaultValue={""}>Invoice</option>
                   <option value="quote">Quote</option>
                   <option value="receipt">Receipt</option>
-                </select>
+                </select> 
+                */}
+                <Select className=" "
+                  options={invoiceTypes} defaultValue={invoiceTypes[1]}
+                //onChange={(e) => setInvoice({ ...invoice, type: e })}
+                //onMenuClose={(e) => console.log(e)}
+                />
               </div>
             </div>
             <div className="form-group">
@@ -214,7 +230,8 @@ const CreateInvoice = () => {
       <div className="row mt-4">
         <div className="col-md-6 col-12 ">
           <div className="form-floating">
-            <textarea className="form-control" style={{ "height": "8rem" }}
+            <textarea className="form-control" style={{ "height": "8rem" }} name={invoice.notes}
+              onChange={(e) => setInvoice({ ...invoice, notes: e.target.value })}
               placeholder="Additional Notes" id="additionalnotes"></textarea>
             <label htmlFor="floatingTextarea">Additional Notes</label>
           </div>
