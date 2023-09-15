@@ -6,7 +6,8 @@ import { customerData } from '../test-data/table-data';
 import { customerTemp } from "../utility/template"
 
 
-const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipping, handleShipping, handleCustomer }) => {
+const CustomerDetails = ({ selectExisting, handleSelectExisting, customer,
+    shipping, handleShipping, handleCustomer }) => {
     const [show, setShow] = useState(false);
 
     const [selectCustomer, setSelectCustomer] = useState(customerTemp);
@@ -91,9 +92,10 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                 <div className="card shadow">
                     <div className="card-header d-flex justify-content-between bg-indigo-50">
                         <p className='h5 align-self-center'>Customer Information</p>
-                        <button onClick={handleShow} className={(selectExisting ? "" : "d-none ") +
-                            "btn hover  m-0 text-black link-underline link-underline-opacity-0 link-underline-opacity-75-hover"}>
+                        {selectExisting && <button onClick={handleShow}
+                            className={"btn hover  m-0 text-black link-underline link-underline-opacity-0 link-underline-opacity-75-hover"} >
                             <span className='fw-bold'>OR </span> Select An Existing Customer</button>
+                        }
                     </div>
                     <div className="card-body">
                         <div className="row">
@@ -120,13 +122,11 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                                     placeholder="Address 2" aria-label="Address 2"
                                     value={customer.address2} onChange={handleCustomer} />
                             </div>
-
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="text" className="form-control" name="city"
                                     placeholder="City" aria-label="city"
                                     value={customer.city} onChange={handleCustomer} />
                             </div>
-
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="text" className="form-control" name="pincode"
                                     placeholder="Pincode" aria-label="pincode"
@@ -138,7 +138,6 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                                     value={customer.phone} onChange={handleCustomer} />
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -153,7 +152,6 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                                 <input type="text" className="form-control" placeholder="Full Name"
                                     name='fullName' value={shipping.fullName} onChange={handleShipping} />
                             </div>
-
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="text" className="form-control" placeholder="Address 1"
                                     name='address1' value={shipping.address1} onChange={handleShipping} />
@@ -162,20 +160,15 @@ const CustomerDetails = ({ selectExisting, handleSelectExisting, customer, shipp
                                 <input type="text" className="form-control" placeholder="Address 2"
                                     name='address2' value={shipping.address2} onChange={handleShipping} />
                             </div>
-
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="text" className="form-control" placeholder="City" aria-label="city"
                                     name='city' value={shipping.city} onChange={handleShipping} />
                             </div>
-
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="text" className="form-control" placeholder="Pincode"
                                     name='pincode' value={shipping.pincode} onChange={handleShipping} />
                             </div>
-
                         </div>
-
-
                     </div>
                 </div>
             </div>

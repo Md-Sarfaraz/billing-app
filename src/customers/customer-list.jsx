@@ -3,6 +3,7 @@ import { customerData } from '../test-data/table-data'
 import DataTable from 'react-data-table-component';
 import { MdDeleteForever, MdEdit } from 'react-icons/md';
 import TableFilter from '../components/table-filter';
+import CustomerDetails from './customer-details';
 
 const CustomerList = () => {
   const [filterText, setFilterText] = useState("");
@@ -22,13 +23,6 @@ const CustomerList = () => {
     }, {
       name: 'Address',
       selector: row => row.address1,
-
-
-    }, {
-      name: 'Address 2',
-      selector: row => row.address2,
-      sortable: true,
-
     }, {
       name: 'City',
       selector: row => row.city,
@@ -49,7 +43,7 @@ const CustomerList = () => {
       sortable: false,
       cell: (d) => [
         <i key={d.name} className="me-2 btn btn-sm btn-outline-info"
-          onClick={() => { console.log("Edit Row with ID : ", d.id) }}>
+          onClick={onRowEditClick(d)}>
           <MdEdit style={{ height: "24px", width: '24px' }} />
         </i>,
         <i key={d.id} className=" btn btn-sm btn-outline-danger"
@@ -61,6 +55,17 @@ const CustomerList = () => {
       minWidth: "7rem"
     }
   ];
+  const handleCustomer = (data) => {
+
+
+  }
+
+  const onRowEditClick = (data) => {
+    console.log("Edit Row with ID : ", data.id)
+    return <CustomerDetails selectExisting={false} edit={true}
+      customer={data} handleCustomer={handleCustomer}
+    />
+  }
 
   const filteredItems = customerData.filter(
     item =>
@@ -89,11 +94,9 @@ const CustomerList = () => {
     <div className="p-5 ">
       <h1 className='h3 mb-4 text-secondary'>Customers List</h1>
       <div className="d-flex justify-content-center">
-
         <div className="card w-100">
           <div className="card-header bg-indigo-50">
             <p className='h5'>All Customers Information</p>
-
           </div>
           <div className="card-body">
             <div className="">
@@ -104,7 +107,6 @@ const CustomerList = () => {
                 subHeaderComponent={subHeaderComponent}
               />
             </div>
-
           </div>
         </div>
       </div>
