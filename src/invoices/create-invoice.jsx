@@ -6,6 +6,7 @@ import CustomerDetails from '../customers/customer-details';
 import OrderDetailes from './order-detailes';
 import { CalculateSum, CalculateTax } from '../utility/calculation';
 import { customerTemp, shippingTemp, productTemp } from '../utility/template';
+import CustomerShipping from '../customers/customer-shipping';
 
 
 const CreateInvoice = () => {
@@ -203,9 +204,15 @@ const CreateInvoice = () => {
       </div>
 
       <div className="">
-        <CustomerDetails selectExisting={true} handleSelectExisting={handleSelectExisting}
-          customer={invoice.customer} handleCustomer={handleCustomer}
-          shipping={invoice.shipping} handleShipping={handleShipping} />
+        <div className="row">
+          <div className="col-md-6 col-12">
+            <CustomerDetails selectExisting={true} handleSelectExisting={handleSelectExisting}
+              customer={invoice.customer} handleCustomer={handleCustomer} />
+          </div>
+          <div className="col-md-6 col-12">
+            <CustomerShipping shipping={invoice.shipping} handleShipping={handleShipping} />
+          </div>
+        </div>
         <div className="mt-3 col-12 ">
           <OrderDetailes addRow={addProductRow} deleteRow={deleteItemRow}
             handleItem={handleInputs} products={invoice.products} />

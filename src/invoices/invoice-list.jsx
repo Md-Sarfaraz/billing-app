@@ -1,11 +1,11 @@
 import React from 'react'
 import DataTable from 'react-data-table-component';
-import { FaEdit } from 'react-icons/fa';
-import { MdDeleteForever, MdEdit } from 'react-icons/md';
+import { MdDeleteForever, MdRemoveRedEye } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
-const Invoices = () => {
+const InvoiceList = () => {
   const navigate = useNavigate();
+  
 
   const columns = [
     {
@@ -42,7 +42,7 @@ const Invoices = () => {
       cell: (d) => [
         <i key={d.invoiceNo} className="me-3 btn btn-sm btn-outline-info"
           onClick={() => { console.log("Edit Row with ID : ", d.id) }}>
-          <MdEdit style={{ height: "24px", width: '24px' }} />
+          <MdRemoveRedEye style={{ height: "24px", width: '24px' }} />
         </i>,
         <i key={d.id} className=" btn btn-sm btn-outline-danger"
           onClick={() => { console.log("Delete Row with ID : ", d.id) }}>
@@ -111,4 +111,4 @@ const Invoices = () => {
   )
 }
 
-export default Invoices
+export default InvoiceList

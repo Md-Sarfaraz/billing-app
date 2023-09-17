@@ -6,7 +6,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 
-import Invoices from './invoices/invoices';
+import InvoiceList from './invoices/invoice-list';
 import CreateInvoice from './invoices/create-invoice';
 import Products from './products/Products';
 import AddProduct from './products/AddProduct';
@@ -27,11 +27,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/invoice/list" element={<Invoices />} />
+        <Route path="/invoice/list" element={<InvoiceList />} />
         <Route path="/invoice/createinvoice" element={<CreateInvoice />} />
         <Route path="/product/list" element={<Products />} />
         <Route path="/product/addproduct" element={<AddProduct />} />
         <Route path="/customer/addcustomer" element={<AddCustomer />} />
+        <Route path="/customer/edit" element={<AddCustomer />} />
         <Route path="/customer/list" element={<CustomerList />} />
         <Route path="/system" element={<CustomerList />} />
       </Routes>

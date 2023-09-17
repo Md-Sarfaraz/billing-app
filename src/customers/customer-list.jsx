@@ -4,8 +4,10 @@ import DataTable from 'react-data-table-component';
 import { MdDeleteForever, MdEdit } from 'react-icons/md';
 import TableFilter from '../components/table-filter';
 import CustomerDetails from './customer-details';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerList = () => {
+  const navigate = useNavigate()
   const [filterText, setFilterText] = useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -14,45 +16,50 @@ const CustomerList = () => {
       name: 'Name',
       selector: row => row.fullName,
       sortable: true,
+      //grow: 3,
 
     }, {
       name: 'Email',
       selector: row => row.email,
       sortable: true,
+      hide: 'sm',
 
     }, {
       name: 'Address',
       selector: row => row.address1,
+      hide: 'md',
     }, {
       name: 'City',
       selector: row => row.city,
       sortable: true,
+      hide: 'sm',
 
     }, {
       name: 'Pincode',
       selector: row => row.pincode,
       sortable: true,
-      width: "6rem"
+      hide: 'md',
     }, {
       name: 'Phone',
       selector: row => row.phone,
       sortable: true,
-      width: "8rem"
     }, {
       name: "Action",
       sortable: false,
       cell: (d) => [
-        <i key={d.name} className="me-2 btn btn-sm btn-outline-info"
-          onClick={onRowEditClick(d)}>
-          <MdEdit style={{ height: "24px", width: '24px' }} />
-        </i>,
-        <i key={d.id} className=" btn btn-sm btn-outline-danger"
-          onClick={() => { console.log("Delete Row with ID : ", d.id) }}>
-          <MdDeleteForever style={{ height: "24px", width: '24px' }} />
-        </i>
+        <div key={d.id}>
+          <i className="me-2 btn btn-sm btn-outline-info"
+            onClick={() => onRowEditClick(d)}>
+            <MdEdit style={{ height: "24px", width: '24px' }} />
+          </i>
+          <i className=" btn btn-sm btn-outline-danger"
+            onClick={() => { console.log("Delete Row with ID : ", d.id) }}>
+            <MdDeleteForever style={{ height: "24px", width: '24px' }} />
+          </i>
+        </div>
       ],
       button: true,
-      minWidth: "7rem"
+      //minWidth: "7rem"
     }
   ];
   const handleCustomer = (data) => {
@@ -62,9 +69,10 @@ const CustomerList = () => {
 
   const onRowEditClick = (data) => {
     console.log("Edit Row with ID : ", data.id)
-    return <CustomerDetails selectExisting={false} edit={true}
-      customer={data} handleCustomer={handleCustomer}
-    />
+    navigate("/customer/edit", { state: { customer: data } })
+    // return <CustomerDetails edit={true}
+    //   customer={data} handleCustomer={handleCustomer}
+    // />
   }
 
   const filteredItems = customerData.filter(
@@ -90,6 +98,9 @@ const CustomerList = () => {
     );
   }, [filterText, resetPaginationToggle]);
 
+  const handleSort = (column, sortDirection) => console.log(column.selector, sortDirection);
+
+
   return (
     <div className="p-5 ">
       <h1 className='h3 mb-4 text-secondary'>Customers List</h1>
@@ -101,9 +112,11 @@ const CustomerList = () => {
           <div className="card-body">
             <div className="">
               <DataTable
+                onSort={handleSort}
+                responsive
                 pagination striped highlightOnHover
                 columns={columns} data={filteredItems}
-                subHeader
+                subHeader 
                 subHeaderComponent={subHeaderComponent}
               />
             </div>
