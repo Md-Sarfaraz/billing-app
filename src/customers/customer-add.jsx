@@ -12,11 +12,11 @@ const AddCustomer = () => {
   useEffect(() => {
     if (location.state && location.state.customer) {
       setCustomer(location.state.customer)
-    } else {
-      setCustomer(customerTemp)
-    }
-
-  }, [])
+      console.log(customer)
+    } 
+    if(location.state === null)setCustomer(customerTemp)
+    
+  }, [location.state])
 
 
   const handleCustomer = (e) => {
@@ -52,7 +52,7 @@ const AddCustomer = () => {
         <button type="button" className="btn btn-secondary float-end"
           onClick={() => navigate(-1)}>Cancel</button>
         <button type="button" className="btn btn-success float-end"
-          onClick={handleAddCustomer}>Add Customer</button>
+          onClick={handleAddCustomer}>Save</button>
       </div>
     </div>
   )

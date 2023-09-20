@@ -68,11 +68,8 @@ const CustomerList = () => {
   }
 
   const onRowEditClick = (data) => {
-    console.log("Edit Row with ID : ", data.id)
+    console.log("Edit Row with ID : ", data)
     navigate("/customer/edit", { state: { customer: data } })
-    // return <CustomerDetails edit={true}
-    //   customer={data} handleCustomer={handleCustomer}
-    // />
   }
 
   const filteredItems = customerData.filter(
