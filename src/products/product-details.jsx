@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const ProductDetails = ({ selectExisting }) => {
+const ProductDetails = ({ selectExisting, cancel, save, product, handleProduct }) => {
 
 
     return (
@@ -18,7 +18,10 @@ const ProductDetails = ({ selectExisting }) => {
                         <div className="row">
                             <div className="col-sm-12 mb-3">
                                 <input type="text" className="form-control"
-                                    placeholder="Product Name" aria-label="Full Name" />
+                                    name='name' value={product.name} onChange={(e) => handleProduct(e)}
+                                    placeholder="Product Name" aria-label="Product Name" />
+                                <input type="hidden" name='id'
+                                    value={product.id} onChange={(e) => handleProduct(e)} />
                             </div>
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <select className="form-select" aria-label="Default select example">
@@ -30,18 +33,22 @@ const ProductDetails = ({ selectExisting }) => {
                             </div>
                             <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="number" className="form-control"
-                                    placeholder="Price" aria-label="Address 2" />
+                                    placeholder="Price" aria-label="Address 2"
+                                    name='price' value={product.price} onChange={(e) => handleProduct(e)} />
                             </div>
                             <div className="col-12 mb-3">
                                 <div className="form-floating">
                                     <textarea className="form-control" placeholder="Product Description"
-                                        id="floatingTextarea2" style={{ "height": "12rem" }}></textarea>
+                                        id="floatingTextarea2" style={{ "height": "12rem" }}
+                                        name='description' value={product.description} onChange={(e) => handleProduct(e)}></textarea>
                                     <label htmlFor="floatingTextarea2">Product Description</label>
                                 </div>
                             </div>
                             <div className="col-12 mb-3 d-flex justify-content-between">
-                                <button type="button" className="btn btn-outline-secondary">Cancel</button>
-                                <button type="button" className="btn btn-primary">Add Product</button>
+                                <button type="button" className="btn btn-outline-secondary"
+                                    onClick={() => { cancel() }}>Cancel</button>
+                                <button type="button" className="btn btn-primary"
+                                    onClick={() => { save() }}>Add Product</button>
                             </div>
                         </div>
                     </div>
