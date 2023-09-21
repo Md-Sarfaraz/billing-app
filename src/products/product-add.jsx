@@ -18,12 +18,17 @@ const ProductAdd = () => {
 
   }, [])
 
-  const handleProduct = (e) => {
-    const name = e.target.name;
-    const val = e.target.value
-    //console.log(name," :cust: ", val,product)
-    setProduct({ ...product, [name]: val });
+  const handleProduct = (e, type) => {
+    if (type) {
+      setProduct({ ...product, type: e.value });
+    } else {
 
+      const name = e.target.name;
+      const val = e.target.value
+      //console.log(name," :cust: ", val,product)
+      setProduct({ ...product, [name]: val });
+    }
+    console.log(product)
 
   }
 

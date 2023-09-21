@@ -1,7 +1,13 @@
 import React from 'react'
-
+import Select from 'react-select'
 
 const ProductDetails = ({ selectExisting, cancel, save, product, handleProduct }) => {
+
+    const productTypes = [
+        { value: 'tools', label: 'Tools' },
+        { value: 'machine', label: 'Machine' },
+        { value: 'general', label: 'General' },
+    ]
 
 
     return (
@@ -24,17 +30,14 @@ const ProductDetails = ({ selectExisting, cancel, save, product, handleProduct }
                                     value={product.id} onChange={(e) => handleProduct(e)} />
                             </div>
                             <div className="col-lg-6 col-sm-12 mb-3">
-                                <select className="form-select" aria-label="Default select example">
-                                    <option defaultValue>Select Type</option>
-                                    <option value="1">Tools</option>
-                                    <option value="2">Machine</option>
-                                    <option value="3">General</option>
-                                </select>
-                            </div>
-                            <div className="col-lg-6 col-sm-12 mb-3">
                                 <input type="number" className="form-control"
                                     placeholder="Price" aria-label="Address 2"
                                     name='price' value={product.price} onChange={(e) => handleProduct(e)} />
+                            </div>
+                            <div className="col-lg-6 col-sm-12 mb-3" >
+                                <Select className=""
+                                    options={productTypes} defaultValue={productTypes[2]}
+                                    onChange={(e) => handleProduct(e, { type: true })} />
                             </div>
                             <div className="col-12 mb-3">
                                 <div className="form-floating">
