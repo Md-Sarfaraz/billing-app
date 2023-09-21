@@ -47,7 +47,6 @@ const ProductList = () => {
     }
   ];  
   const onRowEditClick = (data) => {
-    console.log("Edit Row with ID : ", data)
     navigate("/product/edit", { state: { product: data } })
   }
 

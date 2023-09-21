@@ -11,10 +11,20 @@ const ProductAdd = () => {
   useEffect(() => {
     if (location.state && location.state.product) {
       setProduct(location.state.product)
-      console.log(product)
     }
     if (location.state === null) setProduct(productTemp)
 
+    console.log(product)
+
+  }, [])
+
+  useEffect(() => {
+    const productTypes = [
+      { value: 'tools', label: 'Tools' },
+      { value: 'machine', label: 'Machine' },
+      { value: 'general', label: 'General' },
+    ]
+    console.log("test::: ", productTypes.find(obj => obj.value == location.state.product.type))
 
   }, [])
 
@@ -29,6 +39,7 @@ const ProductAdd = () => {
       setProduct({ ...product, [name]: val });
     }
     console.log(product)
+
 
   }
 

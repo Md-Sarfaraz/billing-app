@@ -2,34 +2,88 @@ import React, { useState } from 'react'
 import { PiMinusSquareFill } from 'react-icons/pi'
 import { Button, Modal } from 'react-bootstrap';
 import { BsPlusSquareFill } from 'react-icons/bs';
+import AsyncSelect from 'react-select/async';
+import { productTemp } from '../utility/template';
+import { productsData } from '../test-data/table-data';
 
-const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
+const OrderDetailes = ({ handleSelectExisting, products, handleItem, addRow, deleteRow }) => {
 
   // console.log("OrderList Comp :: ", productList)
   const [show, setShow] = useState(false);
-
+  const [index, setIndex] = useState(0);
+  const [selectProduct, setSelectProduct] = useState(productTemp);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const options = productsData.reduce((res, item) => {
+    res.push({ value: item.id, label: item.name })
+    return res
+  }, [])
+
+
+  const filterProduct = (inputValue) => {
+    return options.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const loadOptions = (inputValue, callback) => {
+    setTimeout(() => {
+      callback(filterProduct(inputValue))
+    }, 500)
+  }
+  const getOptions = (e) => {
+    var val = productsData.find(item => item.id === e.value)
+    console.log(val)
+    setSelectProduct({ ...val })
+  }
+
+
+  const handleSelectProduct = () => {
+    setShow(false);
+    handleSelectExisting(selectProduct, index)
+
+  }
 
 
   return (<>
     <Modal backdrop="static" dialogClassName="modal-90w" centered
       aria-labelledby="example-custom-modal-styling-title" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Select Product</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you are reading this text in a modal!
-        <p>Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-          commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-          ipsam atque a dolores quisquam quisquam adipisci possimus
-          laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-          accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-          reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-          deleniti rem!</p>
+      <Modal.Body>
+        <AsyncSelect cacheOptions loadOptions={loadOptions} defaultValue={""} isSearchable={false}
+          onChange={(e) => getOptions(e)} //onMenuClose={(e) => console.log(e)}
+          defaultOptions />
+        <div className="row mt-3">
+          <div className=" col-12 mb-3">
+            <input type="text" className="form-control" placeholder="Product Name"
+              aria-label="Name" name="name" value={selectProduct.name} disabled />
+            <input type="text" className="d-none" disabled
+              value={selectProduct.id} />
+          </div>
+          <div className="col-12 mb-3">
+            <div className="input-group">
+              <input type="text" name="price" className="form-control" disabled
+                placeholder="Price" value={selectProduct.price} />
+            </div>
+          </div>
+          <div className="col--12 mb-3">
+            <input type="text" className="form-control" name="type" disabled
+              placeholder="Type" aria-label="city"
+              value={selectProduct.type} />
+          </div>
+          <div className="col-12 mb-3">
+            <textarea type="text" className="form-control" name="description"
+              placeholder="Description" aria-label="Description"
+              value={selectProduct.description} disabled />
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>Close</Button>
-        <Button variant="primary" onClick={handleClose}>Save Changes</Button>
+        <Button variant="primary" onClick={handleSelectProduct}>Select</Button>
       </Modal.Footer>
     </Modal>
 
@@ -58,7 +112,7 @@ const OrderDetailes = ({ products, handleItem, addRow, deleteRow }) => {
                     value={val.product} onChange={handleItem}
                     placeholder="Product Name" aria-label="Full Name" />
                   <button className="btn btn-outline-secondary"
-                    type="button" onClick={handleShow}>Choose</button>
+                    type="button" onClick={() => { setIndex(idx); handleShow() }}>Choose</button>
                 </td>
                 <td className="col-md-2  ">
                   <input type="text" className="d-none" name='id'
