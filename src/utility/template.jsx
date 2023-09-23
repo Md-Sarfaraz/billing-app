@@ -1,8 +1,11 @@
 export const productTemp = {
-    id: Date.now(),
-    name: "", desc: "",
-    quantity: "", type: "",
-    price: "", subTotal: 0.0
+    id: "",
+    name: "",
+    description: "",
+    quantity: "",
+    type: "",
+    price: 0.0,
+    subTotal: 0.0
 };
 
 export const customerTemp = {

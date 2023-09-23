@@ -109,8 +109,8 @@ const OrderDetailes = ({ handleSelectExisting, products, handleItem, addRow, del
               return (<tr className=" " key={idx}>
                 <td className="input-group">
                   <input type="text" className="form-control" name='name' data-id={idx}
-                    value={val.product} onChange={handleItem}
-                    placeholder="Product Name" aria-label="Full Name" />
+                    value={val.name} onChange={handleItem}
+                    placeholder="Product Name" />
                   <button className="btn btn-outline-secondary"
                     type="button" onClick={() => { setIndex(idx); handleShow() }}>Choose</button>
                 </td>

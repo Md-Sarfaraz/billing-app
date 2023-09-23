@@ -167,43 +167,12 @@ const CreateInvoice = () => {
   }
 
   const handleSelectExistingProduct = (selectProduct, index) => {
-    /*  Object.keys(obj).forEach(key => {
-        if (obj[key] === null) obj[key] = ""
-      });
-      setInvoice({
-        ...invoice, customer: obj, shipping: {
-          id: obj.id,
-          fullName: obj.fullName,
-          address1: obj.address1,
-          address2: obj.address2,
-          city: obj.city,
-          pincode: obj.pincode
-        }
-      })
-      let newProduct = [...invoice.products]
-
-      if (Object.keys(productTemp).includes(e.target.name)) {
-        if ('subTotal'.includes(e.target.name)) return
-        let pid = e.target.dataset.id
-        newProduct[pid][e.target.name] = e.target.value;
-        newProduct[pid].subTotal = (newProduct[pid].quantity * newProduct[pid].price)
-      }
-
-      const [subtotal, tax, total] = calculateAll(0)
-      setInvoice({
-        ...invoice,
-        products: newProduct,
-        subTotal: subtotal,
-        tax: tax,
-        total: total,
-      })
-      */
-      let newProduct = [...invoice.products]
-      //newProduct[index][selectProduct.] = e.target.value;
-
-
+    let newProduct = [...invoice.products]
+    newProduct[index] = { ...selectProduct, quantity: 1 }
+    newProduct[index].subTotal = (newProduct[index].quantity * newProduct[index].price)
+    setInvoice({ ...invoice, products: newProduct })
     console.log("Select Existing Product : ", newProduct[index], index)
-
+    console.log("Select Existing Product : ", newProduct[index].name, index)
   }
 
   return (
