@@ -7,7 +7,11 @@ const ProductAdd = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [product, setProduct] = useState(productTemp)
-
+  const productTypes = [
+    { value: 'tools', label: 'Tools' },
+    { value: 'machine', label: 'Machine' },
+    { value: 'general', label: 'General' },
+  ]
   useEffect(() => {
     if (location.state && location.state.product) {
       setProduct(location.state.product)
@@ -19,11 +23,7 @@ const ProductAdd = () => {
   }, [])
 
   useEffect(() => {
-    const productTypes = [
-      { value: 'tools', label: 'Tools' },
-      { value: 'machine', label: 'Machine' },
-      { value: 'general', label: 'General' },
-    ]
+
     console.log("test::: ", productTypes.find(obj => obj.value == location.state.product.type))
 
   }, [])
@@ -55,6 +55,7 @@ const ProductAdd = () => {
       <h1 className='h3 mb-4 text-secondary'>Add New Product</h1>
       <div className=" d-flex justify-content-center" >
         <ProductDetails selectExisting={false} product={product}
+          type={productTypes.find(obj => obj.value == location.state.product.type)}
           cancel={() => navigate(-1)} save={saveProduct} handleProduct={handleProduct} />
       </div>
 

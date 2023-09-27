@@ -24,7 +24,7 @@ const CreateInvoice = () => {
     id: "",
     invoiceNo: "",
     invoiceDate: new Date(),
-    type: "",
+    type: invoiceTypes[1].value,
     notes: "",
     subTotal: 0.0,
     tax: 0.0,
