@@ -1,20 +1,35 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import LocalStorage, { TOKEN_STORAGE_KEY } from "../utility/storage";
 
-export const BASE_URL = 'http://192.168.100.7:8090/api'
+axios.defaults.baseURL = 'http://localhost:8080/api'
+//{ url, method, body = null, headers = null }
+export const useAxios = (axiosParams) => {
 
-const useAxios = () => {
+    const [response, setResponse] = useState(undefined);
+    const [error, setError] = useState('');
+    const [loading, setloading] = useState(true);
 
-    const instance = axios.create({
-        baseURL: BASE_URL,
-        headers: {
-            'content-type': 'application/json',
-            "Access-Control-Allow-Origin": "*",
-        },
-        timeout: 5000,
-    })
 
-    return instance
-}
+    const header = {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+    }
 
-export { useAxios }
+
+    const fetchData = async (params) => {
+        try {
+            const result = await axios.request({ ...params, headers: header });
+            setResponse(result.data);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setloading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData(axiosParams);
+    }, []); // execute once only
+
+    return [response, error, loading];
+};

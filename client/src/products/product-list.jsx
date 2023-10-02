@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { MdDeleteForever, MdEdit } from 'react-icons/md';
 import { productsData } from '../test-data/table-data';
 import { useNavigate } from 'react-router-dom';
+import { useAxios } from '../hooks/useAxios';
 
 const ProductList = () => {
+
+  useEffect = () => {
+
+    const [response, loading, error] = useAxios({
+      method: 'post',
+      url: '/product/list',
+    });
+
+    console.log(response, loading, error);
+
+
+  }
 
   const navigate = useNavigate()
 
@@ -13,7 +26,7 @@ const ProductList = () => {
       name: 'Name',
       selector: row => row.name,
       sortable: true,
-   
+
     }, {
       name: 'Description',
       selector: row => row.description,
@@ -34,7 +47,7 @@ const ProductList = () => {
       sortable: false,
       cell: (d) => [
         <i key={d.name} className="me-3 btn btn-sm btn-outline-info"
-        onClick={() => onRowEditClick(d)}>
+          onClick={() => onRowEditClick(d)}>
           <MdEdit style={{ height: "24px", width: '24px' }} />
         </i>,
         <i key={d.id} className=" btn btn-sm btn-outline-danger"
@@ -45,7 +58,7 @@ const ProductList = () => {
       button: true,
       minWidth: "7rem"
     }
-  ];  
+  ];
   const onRowEditClick = (data) => {
     navigate("/product/edit", { state: { product: data } })
   }
