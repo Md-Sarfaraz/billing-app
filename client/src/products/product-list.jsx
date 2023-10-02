@@ -7,17 +7,23 @@ import { useAxios } from '../hooks/useAxios';
 
 const ProductList = () => {
 
-  useEffect = () => {
+  const [response, loading, error] = useAxios({
+    method: 'get',
+    url: '/product/list',
+    headers: {
+      'content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    }
+  });
 
-    const [response, loading, error] = useAxios({
-      method: 'post',
-      url: '/product/list',
-    });
+
+  useEffect(() => {
 
     console.log(response, loading, error);
 
+  }, [response]);
 
-  }
+
 
   const navigate = useNavigate()
 
