@@ -1,15 +1,26 @@
-import React, { useState, useMemo } from 'react'
-import { customerData } from '../test-data/table-data'
+import React, { useState, useMemo, useEffect } from 'react'
 import DataTable from 'react-data-table-component';
 import { MdDeleteForever, MdEdit } from 'react-icons/md';
 import TableFilter from '../components/table-filter';
-import CustomerDetails from './customer-details';
 import { useNavigate } from 'react-router-dom';
+import { useAxios } from '../hooks/useAxios';
 
 const CustomerList = () => {
   const navigate = useNavigate()
   const [filterText, setFilterText] = useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [customer, error, pending] = useAxios({
+    url: '/customer/list',
+    method: 'get',
+  })
+
+
+  useEffect(() => {
+
+    console.log(customer, error, pending);
+
+  }, [pending]);
+
 
   const columns = [
     {
@@ -72,7 +83,7 @@ const CustomerList = () => {
     navigate("/customer/edit", { state: { customer: data } })
   }
 
-  const filteredItems = customerData.filter(
+  const filteredItems = customer && customer.data.filter(
     item =>
       JSON.stringify(item)
         .toLowerCase()
@@ -110,10 +121,10 @@ const CustomerList = () => {
             <div className="">
               <DataTable
                 onSort={handleSort}
-                responsive
+                responsive progressPending={pending}
                 pagination striped highlightOnHover
                 columns={columns} data={filteredItems}
-                subHeader 
+                subHeader
                 subHeaderComponent={subHeaderComponent}
               />
             </div>

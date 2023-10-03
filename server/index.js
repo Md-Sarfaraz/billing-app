@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const data = require('./data/data');
 
 const app = express();
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
 app.get('/', (req, res) => {
@@ -10,19 +12,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/customer/list', (req, res) => {
-      res.send({
-            'status': true,
-            "data": data.customerData
-      })
+      setTimeout(() => {
+            res.send({ 'status': true, "data": data.customerData })
+      }, 500);
 })
 
-app.get('/product/list', (req, res) => {
-      res.send({
-            'status': true,
-            "data": data.productsData
-      })
-
-})
+app.use('/product', require('./router/products-router'))
 
 
 app.listen(8080, () => {

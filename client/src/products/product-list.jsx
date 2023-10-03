@@ -7,21 +7,17 @@ import { useAxios } from '../hooks/useAxios';
 
 const ProductList = () => {
 
-  const [response, loading, error] = useAxios({
+  const [response, error, loading] = useAxios({
     method: 'get',
     url: '/product/list',
-    headers: {
-      'content-type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    }
   });
 
 
   useEffect(() => {
 
-    console.log(response, loading, error);
+    console.log(response, error, loading);
 
-  }, [response]);
+  }, [loading]);
 
 
 
@@ -81,8 +77,8 @@ const ProductList = () => {
           <div className="card-body">
             <div className="">
               <DataTable
-                pagination striped highlightOnHover
-                columns={columns} data={productsData}
+                pagination striped highlightOnHover progressPending={loading}
+                columns={columns} data={response && response.data}
               />
             </div>
           </div>

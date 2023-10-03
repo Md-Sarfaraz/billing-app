@@ -1,41 +1,37 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-//axios.defaults.baseURL = 'http://localhost:8080/api'
-axios.defaults.baseURL = 'https://probable-train-p747rj5qg5wcr4vw-8080.app.github.dev'
-
-//axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
-
+axios.defaults.baseURL = 'http://localhost:8080'
 
 //{ url, method, body = null, headers = null }
-export const useAxios = (axiosParams) => {
+export const useAxios = ({ url, method, body = null, headers = null }) => {
 
     const [response, setResponse] = useState(undefined);
     const [error, setError] = useState('');
     const [loading, setloading] = useState(true);
 
+    // const header = {
+    //     'content-type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    // }
 
-    const header = {
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    }
 
+    const fetchData = async () => {
 
-    const fetchData = async (params) => {
-        console.log('params', params)
-        try {
-            const result = await axios.request(params);
-            //console.log('result', result)
-            setResponse(result.data);
-        } catch (error) {
-            setError(error);
-        } finally {
-            setloading(false);
-        }
+        await axios[method](url, JSON.parse(headers), JSON.parse(body))
+            .then((res) => {
+                setResponse(res.data);
+            })
+            .catch((err) => {
+                setError(err);
+            })
+            .finally(() => {
+                setloading(!loading);
+            });
     };
 
     useEffect(() => {
-        fetchData(axiosParams);
+        fetchData();
     }, []); // execute once only
 
     return [response, error, loading];
