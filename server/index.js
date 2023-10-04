@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { errorHandler } = require('./middleware/error-middleware');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/customer/list', (req, res) => {
 app.use('/product', require('./router/products-router'))
 
 
+app.use(errorHandler)
 app.listen(8080, () => {
       console.log('server listening on port 8080')
 })

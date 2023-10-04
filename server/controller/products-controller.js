@@ -10,12 +10,9 @@ const updateProducts = (req, res) => {
 
 
 const saveProducts = (req, res) => {
-    console.log(req.body.text)
     if (!req.body.text) {
-        res.status(400).json({ message: "Plese add a text field" })
-        return
+        throw new Error('Please add a text field')
     }
-
 
     res.status(200).json({ 'status': true, "data": ` Product is Saved` })
 }
