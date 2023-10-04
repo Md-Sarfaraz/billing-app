@@ -1,15 +1,17 @@
 const data = require('../data/data').productsData;
+const asyncHandler = require('express-async-handler')
 
-const getProducts = (req, res) => {
+
+const getProducts = async (req, res) => {
     res.status(200).json({ 'status': true, "data": data })
 }
 
-const updateProducts = (req, res) => {
+const updateProducts = async (req, res) => {
     res.status(200).json({ 'status': true, "data": `Update Product id : ${req.params.id}` })
 }
 
 
-const saveProducts = (req, res) => {
+const saveProducts = async (req, res) => {
     if (!req.body.text) {
         throw new Error('Please add a text field')
     }
@@ -18,7 +20,7 @@ const saveProducts = (req, res) => {
 }
 
 
-const findProducts = (req, res) => {
+const findProducts = async (req, res) => {
     res.status(200).json({
         'status': true,
         "data": data.at(req.params.id - 1)
@@ -26,7 +28,7 @@ const findProducts = (req, res) => {
 }
 
 
-const deleteProducts = (req, res) => {
+const deleteProducts = async (req, res) => {
     res.status(200).json({ 'status': true, "data": `Delete Product id : ${req.params.id}` })
 }
 
